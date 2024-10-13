@@ -58,14 +58,6 @@ static const char * months[12] = {
   "October", "November", "December"
 };
 
-// With fixed-width names for column printing
-static const char * months_fixed[12] = {
-  "January  ", "February ", "March    ",
-  "April    ", "May      ", "June     ",
-  "July     ", "August   ", "September",
-  "October  ", "November ", "December "
-};
-
 /**
  * Get the average of a float array between two indices (inclusive)
  *
@@ -95,7 +87,7 @@ void print_monthly_sales_report(float * data, int year) {
   printf("Month     Sales\n");
 
   for(int i = 0; i < 12; i++) {
-    printf("%s %.2f\n", months_fixed[i], data[i]);
+    printf("%-9s %.2f\n", months[i], data[i]);
   }
   printf("\n\n");
 }
@@ -203,7 +195,7 @@ void print_sorted_sales_report(float *data) {
 
   // Print in descending order
   for (int i = 11; i >= 0; i--) {
-    printf("%s %.2f\n", months_fixed[indices[i]], data[indices[i]]);
+    printf("%-9s %.2f\n", months[indices[i]], data[indices[i]]);
   } 
   printf("\n\n");
 }
