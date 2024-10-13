@@ -1,6 +1,8 @@
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 
 /**
  * Prompt the user for the file to open and read the contents
@@ -143,6 +145,71 @@ void print_six_month_moving_average(float *data) {
   printf("\n\n");
 }
 
+/**
+ * Swaps the values of two int pointers
+ */
+void swap(int *a, int *b) {
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+/**
+ * For recursive calls from `quicksort_indices`
+ */ 
+void quicksort_indices_rec(float *arr, int *ind, int low, int high) {
+  if (low >= high || low < 0)
+    return;
+
+  int i = low;
+
+  // Partition the array
+  for(int j = low; j < high; j++) {
+    if (arr[ind[j]] <= arr[ind[high]]) {
+      swap(&ind[i], &ind[j]);
+      i++;
+    }
+  }
+
+  swap(ind+i, ind+high);
+
+  quicksort_indices_rec(arr, ind, low, i - 1);
+  quicksort_indices_rec(arr, ind, i + 1, high);
+}
+
+/**
+ * Sort the indices of an array without altering the original array
+ *
+ * @param arr The array to sort 
+ * @param ind An array of equal length to store indices in 
+ * @param length The length of `arr`
+ */
+void quicksort_indices(float *arr, int *ind, int length) {
+  for(int i = 0; i < length; i++)
+    ind[i] = i;
+
+  quicksort_indices_rec(arr, ind, 0, length - 1);
+}
+
+/**
+ * Print a monthly sales report in descending order by sales figure
+ *
+ * @param data An array of 12 floats corresponding to monthly sales figures. 
+ */
+void print_sorted_sales_report(float *data) {
+  int indices[12]; // for preserving the order of the months along with the sales data
+  quicksort_indices(data, indices, 12);
+
+  printf("Sales report (highest to lowest):\n\n");
+  printf("Month     Sales\n");
+
+  // Print in descending order
+  for (int i = 11; i >= 0; i--) {
+    printf("%s %.2f\n", months_fixed[indices[i]], data[indices[i]]);
+  } 
+  printf("\n\n");
+}
+
 int main() {
   // Get sales data
   float figures[12];
@@ -150,9 +217,11 @@ int main() {
   if (!success)
     return 1;
 
+  // Print the report
   print_monthly_sales_report(figures, 2024);
   print_sales_summary(figures);
   print_six_month_moving_average(figures);
+  print_sorted_sales_report(figures);
 
   return 0;
 }
