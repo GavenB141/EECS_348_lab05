@@ -16,8 +16,8 @@ typedef struct {
 Matrix addMatrices(Matrix m1, Matrix m2) {
   Matrix sum;
   
-  for(int i = 0; i < SIZE; i++) {
-    for(int j = 0; j < SIZE; j++) {
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j < SIZE; j++) {
       sum.items[i][j] = m1.items[i][j] + m2.items[i][j];
     }
   }
@@ -26,12 +26,33 @@ Matrix addMatrices(Matrix m1, Matrix m2) {
 }
 
 /**
+ * Returns the product of two matrices.
+ */
+Matrix multiplyMatrices(Matrix m1, Matrix m2) {
+  Matrix product;
+
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j < SIZE; j++) {
+      int m_ij = 0;
+
+      for (int k = 0; k < SIZE; k++) {
+        m_ij += m1.items[i][k] * m2.items[k][j];
+      }
+
+      product.items[i][j] = m_ij;
+    }
+  }
+
+  return product;
+}
+
+/**
  * Prints the given matrix to stdout.
  */
 void printMatrix(Matrix m) {
-  for(int i = 0; i < SIZE; i++) {
+  for (int i = 0; i < SIZE; i++) {
     printf("| ");
-    for(int j = 0; j < SIZE; j++) {
+    for (int j = 0; j < SIZE; j++) {
       printf("%4d ", m.items[i][j]);
     }
     printf("|\n");
@@ -55,14 +76,22 @@ int main () {
     {5, 4, 3, 2, 1}
   }};
 
-  printf("Matrix m1:\n");
+  printf("Matrix A:\n");
   printMatrix(m1);
-  printf("Matrix m2:\n");
+  printf("Matrix B:\n");
   printMatrix(m2);
 
   Matrix sum = addMatrices(m1, m2);
-  printf("m1 + m2:\n");
+  printf("A + B:\n");
   printMatrix(sum);
+
+  Matrix product1 = multiplyMatrices(m1, m2);
+  printf("AB:\n");
+  printMatrix(product1);
+
+  Matrix product2 = multiplyMatrices(m2, m1);
+  printf("BA:\n");
+  printMatrix(product2);
 
   return 0;
 }
