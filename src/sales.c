@@ -67,11 +67,12 @@ static const char * months_fixed[12] = {
 };
 
 /**
- * Print the average of a float array between two indices (inclusive)
+ * Get the average of a float array between two indices (inclusive)
  *
  * @param array The array to average
  * @param start The first index
  * @param end The last index
+ * @return The average between the indices
  */
 float slice_average(float *data, int start, int end) {
   float sum = 0;
