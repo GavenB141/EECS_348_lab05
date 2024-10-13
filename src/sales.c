@@ -1,8 +1,6 @@
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 
 /**
  * Prompt the user for the file to open and read the contents
