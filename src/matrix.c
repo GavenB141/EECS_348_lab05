@@ -14,6 +14,7 @@ typedef struct {
  * Returns the sum of two matrices. 
  */
 Matrix addMatrices(Matrix m1, Matrix m2) {
+  // No validation is needed since matrices have a fixed size.
   Matrix sum;
   
   for (int i = 0; i < SIZE; i++) {
@@ -44,6 +45,21 @@ Matrix multiplyMatrices(Matrix m1, Matrix m2) {
   }
 
   return product;
+}
+
+/**
+ * Returns the transpose of the given matrix.
+ */
+Matrix transposeMatrix(Matrix m) {
+  Matrix transposed;
+
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j < SIZE; j++) {
+      transposed.items[i][j] = m.items[j][i];
+    }
+  }
+
+  return transposed;
 }
 
 /**
@@ -92,6 +108,13 @@ int main () {
   Matrix product2 = multiplyMatrices(m2, m1);
   printf("BA:\n");
   printMatrix(product2);
+
+  Matrix m1T = transposeMatrix(m1);
+  Matrix m2T = transposeMatrix(m2);
+  printf("Transpose of A:\n");
+  printMatrix(m1T);
+  printf("Transpose of B:\n");
+  printMatrix(m2T);
 
   return 0;
 }
